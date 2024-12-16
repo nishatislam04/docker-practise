@@ -1,24 +1,34 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import axios from "axios";
+import "./style.css";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+// Import lodash (make sure it's installed in node_modules)
+import _ from "lodash";
 
-setupCounter(document.querySelector('#counter'))
+// Example usage of lodash
+const numbers = [1, 2, 3, 4, 5];
+const shuffledNumbers = _.shuffle(numbers); // Shuffles the numbers array
+
+console.log("Shuffled numbers:", shuffledNumbers);
+
+document.querySelector("#app").innerHTML = `
+  <h1>Axios Test with JSONPlaceholder</h1>
+  <ul id="post-list"></ul>
+`;
+async function fetchData() {
+	try {
+		const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
+		console.log("Data fetched successfully:", response.data);
+
+		// Render the data to the DOM (for testing purposes)
+		const list = document.getElementById("post-list");
+		response.data.forEach((post) => {
+			const listItem = document.createElement("li");
+			listItem.textContent = `${post.id}: ${post.title}`;
+			list.appendChild(listItem);
+		});
+	} catch (error) {
+		console.error("Error fetching data:", error);
+	}
+}
+
+fetchData();
