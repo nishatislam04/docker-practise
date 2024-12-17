@@ -1,0 +1,9 @@
+services:
+  react-app:
+    build: .
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_SERVER_HOST=0.0.0.0
+    volumes:
+      - .:/app
